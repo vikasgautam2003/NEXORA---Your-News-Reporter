@@ -1,0 +1,161 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Nexora News</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex flex-col items-center p-6">
+  <h1 class="text-3xl font-bold text-indigo-600 mb-4">📰 Nexora - AI Powered News</h1>
+  
+  <form action="/news" method="POST" class="w-full max-w-md bg-white shadow-lg p-4 rounded-xl">
+    <input type="text" name="query" placeholder="Search news (e.g. AI in India)" value="<%= query || '' %>"
+      class="w-full border p-2 rounded mb-3" required>
+    <button class="w-full bg-indigo-500 text-white p-2 rounded hover:bg-indigo-600">Search</button>
+  </form>
+
+  <% if (result) { %>
+    <div class="mt-6 w-full max-w-2xl bg-white p-4 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-2">Results for "<%= query %>":</h2>
+      <p class="text-gray-700 whitespace-pre-line"><%= result %></p>
+    </div>
+  <% } %>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexora News</title>
+    <!-- Using a more recent version of Tailwind for modern features -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base styling with a custom, futuristic font */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #020617; /* Deep space blue */
+            color: #E2E8F0;
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+
+        /* Animated cybernetic grid background */
+        .cyber-grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 3rem 3rem;
+            animation: pan-grid 60s linear infinite;
+        }
+        @keyframes pan-grid {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        /* Subtle gradient flares for atmosphere */
+        .gradient-flares {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -9;
+            opacity: 0.4;
+            background: radial-gradient(circle at 15% 25%, #0e7490, transparent 40%),
+                        radial-gradient(circle at 85% 75%, #4338ca, transparent 40%);
+        }
+
+        /* Custom styling for the results scrollbar */
+        .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 255, 255, 0.05); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0, 255, 255, 0.5); }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="cyber-grid-background"></div>
+    <div class="gradient-flares"></div>
+    
+    <div class="relative min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6">
+        <main class="w-full max-w-2xl mx-auto flex flex-col items-center text-center">
+            
+            <header class="mb-8 flex items-center gap-4">
+                <!-- Custom SVG Icon for a sharp, robotic feel -->
+                <svg class="w-12 h-12 sm:w-16 sm:h-16 text-cyan-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7V17L12 22L22 17V7L12 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M2 7L12 12M22 7L12 12M12 22V12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                    <path d="M17 4.5L7 9.5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>
+                <h1 class="font-orbitron text-4xl sm:text-5xl font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-indigo-400">NEXORA</h1>
+            </header>
+            
+            <!-- The Form: Glassmorphism effect with glowing borders -->
+            <form id="news-form" action="/news" method="POST" class="w-full bg-slate-900/50 backdrop-blur-xl border border-cyan-500/20 rounded-2xl shadow-2xl shadow-cyan-500/10 p-4 transition-all duration-300 focus-within:border-cyan-500/50 focus-within:shadow-cyan-500/20">
+                <div class="flex flex-col sm:flex-row items-center gap-3">
+                    <input type="text" name="query" placeholder="Query the datasphere (e.g., AI in India)" value="<%= query || '' %>"
+                        class="w-full bg-transparent text-lg px-4 py-3 rounded-lg border-none outline-none focus:ring-0 placeholder-slate-500" required>
+                    <button id="submit-button" class="w-full sm:w-auto shrink-0 bg-gradient-to-r from-cyan-400 to-indigo-500 text-white font-bold px-8 py-3 rounded-lg transition-all duration-300 hover:brightness-110 hover:shadow-lg hover:shadow-cyan-500/30 active:scale-95 flex items-center justify-center">
+                        Synthesize
+                    </button>
+                </div>
+            </form>
+
+            <!-- Results Section: EJS logic remains untouched -->
+            <% if (result) { %>
+                <div class="mt-8 w-full bg-slate-900/50 backdrop-blur-xl border border-cyan-500/20 rounded-2xl shadow-2xl shadow-cyan-500/10 text-left overflow-hidden">
+                    <div class="p-4 sm:p-6">
+                        <h2 class="text-xl sm:text-2xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-indigo-400">
+                            Analysis for: <span class="text-slate-200 font-mono"><%= query %></span>
+                        </h2>
+                        <!-- Whitespace formatting is preserved -->
+                        <div class="text-slate-300 text-base sm:text-lg max-w-none h-96 overflow-y-auto custom-scrollbar pr-2 sm:pr-4 space-y-4">
+                            <%- result
+                                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-cyan-300 font-bold text-lg block my-3">$1</strong>')
+                                .replace(/^- (.*)/gm, '<div class="flex items-start"><span class="text-cyan-400 mr-3 mt-1">&#9679;</span><span>$1</span></div>')
+                                .replace(/\n/g, '<br>')
+                             %>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+
+        </main>
+        <footer class="absolute bottom-4 text-center text-slate-600 text-xs sm:text-sm font-mono">
+            // NEXORA v1.0.0 //
+        </footer>
+    </div>
+    
+    <script>
+        // --- SCRIPT FOR LOADING STATE ---
+        const newsForm = document.getElementById('news-form');
+        const submitButton = document.getElementById('submit-button');
+
+        if (newsForm && submitButton) {
+            newsForm.addEventListener('submit', () => {
+                submitButton.disabled = true;
+                submitButton.innerHTML = `
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Synthesizing...
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
+
